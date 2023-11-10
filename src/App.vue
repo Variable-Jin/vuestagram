@@ -54,7 +54,13 @@ export default {
       step: 0,
       이미지: "",
       작성한글: "",
+      선택한필터: "",
     };
+  },
+  mounted() {
+    this.emitter.on("boxclick", (a) => {
+      this.선택한필터 = a;
+    });
   },
   components: {
     Container: Container,
@@ -64,12 +70,12 @@ export default {
       var 내게시물 = {
         name: "Kim Hyun",
         userImage: "https://picsum.photos/100?random=3",
-        postImage: "this.이미지",
+        postImage: this.이미지,
         likes: 36,
         date: "May 15",
         liked: false,
-        content: "this.작성한글",
-        filter: "perpetua",
+        content: this.작성한글,
+        filter: this.선택한필터,
       };
       this.게시물.unshift(내게시물);
       this.step = 0;

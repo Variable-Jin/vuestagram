@@ -6,6 +6,7 @@
 
     <div v-if="step == 1">
       <div
+        :class="선택한필터"
         class="upload-image"
         style="`background-image: url(${이미지}) `"
       ></div>
@@ -16,12 +17,18 @@
           V-for="필터 in 필터들"
           :key="a"
         >
+          <!-- slot - HTML도 전송 가능
+          <template v-slot:a> <span>데이터1</span> </template>   -->
+          <!-- slot props 사용법
+          <template v-slot:default="작명"> <span>{{작명.msg}}</span> </template> -->
+          <span>{{ 필터 }}</span>
         </FilterBox>
       </div>
     </div>
 
     <div v-if="step == 2">
       <div
+        :class="선택한필터"
         class="upload-image"
         style="`background-image: url(${이미지}) `"
       ></div>
@@ -73,7 +80,13 @@ export default {
         "willow",
         "xpro2",
       ],
+      선택한필터: "",
     };
+  },
+  mounted() {
+    this.emitter.on("boxclick", (a) => {
+      this.선택한필터 = a;
+    });
   },
   components: {
     Post: Post,
