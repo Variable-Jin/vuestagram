@@ -10,8 +10,9 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <h4>안녕 {{ $store.state.name }}</h4>
+  <h4>안녕 {{ $store.state.age }}</h4>
   <!-- store.js에 있는 state 꺼내 사용법 : store.state.~ -->
+  <button @click="$store.commit('증가', 10)"></button>
 
   <Container
     @write="작성한글 = $event"

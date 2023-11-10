@@ -5,6 +5,7 @@
       <span class="profile-name">{ 게시물.name }</span>
     </div>
     <div
+      @click="$store.commit('좋아요')"
       :class="게시물.filter"
       class="post-body"
       style="
@@ -14,7 +15,7 @@
       "
     ></div>
     <div class="post-content">
-      <p>{ 게시물.likes }</p>
+      <p>{{ $store.state.likes }} Likes</p>
       <p><strong>{ 게시물.name }</strong> { 게시물.content }</p>
       <p class="date">May 15</p>
     </div>
