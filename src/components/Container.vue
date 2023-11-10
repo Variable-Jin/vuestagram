@@ -96,7 +96,7 @@ export default {
   components: {
     Post: Post,
     FilterBox: FilterBox,
-    MyPage: MyPage,
+    MyPage,
   },
   props: {
     게시물: Array,
