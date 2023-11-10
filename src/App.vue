@@ -4,17 +4,29 @@
       <li>Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li v-if="step == 1" @click="step++">Next</li>
+      <li v-if="step == 2" @click="publish">발행</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :게시물="게시물" :step="Step" />
-  <button @click="more">더보기</button>
+  <Container
+    :이미지="이미지"
+    :게시물="게시물"
+    :step="step"
+    @write="작성한글 = $event"
+  />
+  <!-- <button @click="more">더보기</button> -->
 
   <div class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
+      <input
+        @change="upload"
+        accept="image/*"
+        type="file"
+        id="file"
+        class="inputfile"
+      />
       <label for="file" class="input-plus">+</label>
     </ul>
   </div>
@@ -40,14 +52,30 @@ export default {
       게시물: PostingData,
       count: 0,
       step: 0,
+      이미지: "",
+      작성한글: "",
     };
   },
   components: {
     Container: Container,
   },
   methods: {
+    publish() {
+      var 내게시물 = {
+        name: "Kim Hyun",
+        userImage: "https://picsum.photos/100?random=3",
+        postImage: "this.이미지",
+        likes: 36,
+        date: "May 15",
+        liked: false,
+        content: "this.작성한글",
+        filter: "perpetua",
+      };
+      this.게시물.unshift(내게시물);
+      this.step = 0;
+    },
     //  axios 요청 실패시 .catch()코드가 실행
-    // axios.post('URL', {name: 'kim'}).then().catch((err)=>{
+    // axios.post('URL', {name: 'kim'}).then(success).catch((err)=>{
     //   err(에러메세지) ~
     // })
     more() {
@@ -58,6 +86,14 @@ export default {
           this.count++;
         });
     },
+  },
+  upload(e) {
+    let 파일 = e.target.files;
+    console.log(파일[0].type);
+    let url = URL.createObjectURL(파일[0]);
+    console.log(url);
+    this.이미지 = url;
+    this.step++;
   },
 };
 </script>
