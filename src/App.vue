@@ -10,14 +10,14 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <p>{{ 내이름 }} {{ age }} {{ likes }}</p>
+  <!-- <p>{{ 내이름 }} {{ age }} {{ likes }}</p> -->
 
-  <h4>안녕 {{ $store.state.age }}</h4>
-  <!-- store.js에 있는 state 꺼내 사용법 : store.state.~ -->
+  <!-- <h4>안녕 {{ $store.state.age }}</h4>
+  store.js에 있는 state 꺼내 사용법 : store.state.~
   <button @click="$증가(10)"></button>
 
   <p>{{ $store.state.more }}</p>
-  <button @click="$store.dispatch('getData')">더보기버튼</button>
+  <button @click="$store.dispatch('getData')">더보기버튼</button> -->
 
   <Container
     @write="작성한글 = $event"
@@ -55,7 +55,7 @@ export default {
     return {
       게시물: PostingData,
       count: 0,
-      step: 0,
+      step: 3,
       이미지: "",
       작성한글: "",
       filter: "",
