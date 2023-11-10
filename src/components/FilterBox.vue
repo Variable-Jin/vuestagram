@@ -2,7 +2,7 @@
   <!--1) :class="필터 + 방식 사용 가능 => + : 문자+변수 더하고 싶으면-->
   <div
     @click="fire"
-    :class="필터"
+    :class="filter"
     class="filter-item"
     :style="`background-image: url(${이미지})`"
   >
@@ -18,12 +18,12 @@ export default {
   name: "FilterBox",
   methods: {
     fire() {
-      this.emitter.emit("boxxclick", this.필터);
+      this.emitter.emit("filter", this.filter);
     },
   },
   props: {
     이미지: String,
-    필터: String,
+    filter: String,
   },
 };
 </script>

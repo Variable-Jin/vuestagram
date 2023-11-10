@@ -10,9 +10,14 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
+  <p>{{ 내이름 }} {{ age }} {{ likes }}</p>
+
   <h4>안녕 {{ $store.state.age }}</h4>
   <!-- store.js에 있는 state 꺼내 사용법 : store.state.~ -->
-  <button @click="$store.commit('증가', 10)"></button>
+  <button @click="$증가(10)"></button>
+
+  <p>{{ $store.state.more }}</p>
+  <button @click="$store.dispatch('getData')">더보기버튼</button>
 
   <Container
     @write="작성한글 = $event"
@@ -24,13 +29,7 @@
 
   <div class="footer">
     <ul class="footer-button-plus">
-      <input
-        @change="upload"
-        accept="image/*"
-        type="file"
-        id="file"
-        class="inputfile"
-      />
+      <input @change="upload" type="file" id="file" class="inputfile" />
       <label for="file" class="input-plus">+</label>
     </ul>
   </div>
@@ -48,6 +47,7 @@
 import Container from "./components/Container.vue";
 import PostingData from "./assets/PostingData.js";
 import axios from "axios";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "App",
@@ -58,18 +58,30 @@ export default {
       step: 0,
       이미지: "",
       작성한글: "",
-      선택한필터: "",
+      filter: "",
+      counter: 0,
     };
   },
   mounted() {
-    this.emitter.on("boxclick", (a) => {
-      this.선택한필터 = a;
+    this.emitter.on("filter", (a) => {
+      this.filter = a;
     });
   },
   components: {
     Container: Container,
   },
+
+  computed: {
+    name() {
+      return this.$store.state.name;
+    },
+    ...mapState(["name", "age", "likes"]),
+    ...mapState({ 내이름: "name" }),
+  },
+
   methods: {
+    ...mapMutations(["setMore", "좋아요", "증가"]),
+
     publish() {
       var 내게시물 = {
         name: "Kim Hyun",
@@ -79,7 +91,7 @@ export default {
         date: "May 15",
         liked: false,
         content: this.작성한글,
-        filter: this.선택한필터,
+        filter: this.filter,
       };
       this.게시물.unshift(내게시물);
       this.step = 0;
@@ -96,14 +108,14 @@ export default {
           this.count++;
         });
     },
-  },
-  upload(e) {
-    let 파일 = e.target.files;
-    console.log(파일[0].type);
-    let url = URL.createObjectURL(파일[0]);
-    console.log(url);
-    this.이미지 = url;
-    this.step++;
+    upload(e) {
+      let 파일 = e.target.files;
+      console.log(파일[0].type);
+      let url = URL.createObjectURL(파일[0]);
+      console.log(url);
+      this.이미지 = url;
+      this.step++;
+    },
   },
 };
 </script>
